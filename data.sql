@@ -1,6 +1,5 @@
 -- 1. Insertion des fonctions (depuis missions.txt)
 INSERT INTO fonction (id, label, missions) VALUES 
-INSERT INTO fonction (id, label, missions) VALUES 
 (1, 'Médiatrice', 'Assurer la médiation entre les communautés locales et l''entreprise\nSensibiliser les populations aux activités et valeurs de Bôndy International\nCollecter et reporter les retours du terrain à la hiérarchie\nParticiper aux réunions communautaires'),
 (2, 'Chef pépiniériste', 'Superviser et coordonner toutes les activités de la pépinière\nContrôler la qualité et la conformité des plants produits\nEncadrer l''équipe de pépiniéristes et planifier les tâches hebdomadaires\nAssurer le suivi des indicateurs de production'),
 (3, 'Pépiniériste', 'Produire, repiquer et entretenir les plants en pépinière\nAppliquer les techniques de culture et d''arrosage adaptées\nAssurer le suivi de la croissance et signaler les anomalies\nPréparer les commandes de plants pour les livraisons'),
