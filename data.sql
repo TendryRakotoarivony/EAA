@@ -1,5 +1,4 @@
--- 1. Insertion des fonctions (depuis missions.txt)
-INSERT INTO fonction (id, label, missions) VALUES 
+-- 1. Insertion des fonctions
 INSERT INTO fonction (id, label, missions) VALUES 
 (1, 'Médiatrice', 'Assurer la médiation entre les communautés locales et l''entreprise\nSensibiliser les populations aux activités et valeurs de Bôndy International\nCollecter et reporter les retours du terrain à la hiérarchie\nParticiper aux réunions communautaires'),
 (2, 'Chef pépiniériste', 'Superviser et coordonner toutes les activités de la pépinière\nContrôler la qualité et la conformité des plants produits\nEncadrer l''équipe de pépiniéristes et planifier les tâches hebdomadaires\nAssurer le suivi des indicateurs de production'),
@@ -11,53 +10,41 @@ INSERT INTO fonction (id, label, missions) VALUES
 (8, 'Assistant Polyvalent', 'Assurer le support administratif et logistique au quotidien\nGérer le courrier entrant et sortant\nCoordiner les déplacements et rendez-vous\nParticiper à diverses missions transversales selon les besoins'),
 (9, 'Agent polyvalent de maintenance et de surveillance', 'Effectuer les travaux de maintenance préventive et corrective\nSurveiller les installations techniques du site\nIntervenir rapidement en cas de panne ou dysfonctionnement\nTenir à jour le carnet de maintenance'),
 (10, 'Skipper', 'Assurer la navigation sécurisée des embarcations\nEntretenir et vérifier le matériel nautique avant chaque sortie\nRespect des règles de sécurité maritime\nEncadrer les passagers et l''équipage');
--- Sources: [3, 5]
 
--- 2. Insertion de 2 employés (depuis employes.txt)
-INSERT INTO employe (id, matricule, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciannete) VALUES 
-(1, 2, 1, 'RAHANITRARIVO', 'Haingotiana Isabelle', '4A', 'G3', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-02-07', 6.0),
-(2, 3, 2, 'RANDRIANARISOA', 'Gilbert', 'OS3', 'G2', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-03-02', 6.0);
--- Sources: [1, 2, 6, 7]
+-- 2. Insertion de 4 employés (2 managers, 2 non-managers)
+-- Manager 1 : Gilbert (Chef pépiniériste)
+INSERT INTO employe (id, matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES 
+(1, 3, NULL, 1, 'RANDRIANARISOA', 'Gilbert', 'OS3', 'G2', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-03-02', 6.0);
 
--- 3. Insertion d'un entretien pour chaque employé
--- Les dates de signature sont obligatoires (NOT NULL)
+-- Manager 2 : Lovasoa (Assistante RH) - gérée par Gilbert
+INSERT INTO employe (id, matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES 
+(2, 147, 1, 2, 'RAKOTONJANAHARY', 'Lovasoa', '5A', 'G3', 'Ressources Humaines', 'Ressources Humaines', 'ANALAMANGA', 'Siège', '2024-12-03', 1.2);
+
+-- Employé non-manager 1 : Haingotiana (Médiatrice) - gérée par Lovasoa
+INSERT INTO employe (id, matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES 
+(3, 2, 2, 3, 'RAHANITRARIVO', 'Haingotiana Isabelle', '4A', 'G3', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-02-07', 6.0);
+
+-- Employé non-manager 2 : Heriniaina (Pépiniériste) - géré par Lovasoa
+INSERT INTO employe (id, matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES 
+(4, 4, 2, 4, 'RANDRIANARISON', 'Heriniaina Tolojanahary', 'M2', 'G1', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-03-02', 6.0);
+-- [5-9]
+
+-- 3. Entretiens pour les non-managers uniquement (ID 3 et 4)
 INSERT INTO entretien (id, id_employe, date_entretien, niveau, date_signature_colab, date_signature_manager) VALUES 
-(1, 1, '2025-03-01', 3, '2025-03-01', '2025-03-02'),
-(2, 2, '2025-03-05', 4, '2025-03-05', '2025-03-06');
--- Sources: [2]
+(1, 3, '2025-03-01', 3, '2025-03-01', '2025-03-02'),
+(2, 4, '2025-03-05', 4, '2025-03-05', '2025-03-06');
+-- [6]
 
--- 4. Insertion de 6 notes de performance par entretien (Questions 1 à 6)
--- Pour l'entretien 1
-INSERT INTO note_performance (id_entretien, num_question, note) VALUES 
-(1, 1, 4), (1, 2, 3), (1, 3, 5), (1, 4, 4), (1, 5, 2), (1, 6, 4);
--- Pour l'entretien 2
-INSERT INTO note_performance (id_entretien, num_question, note) VALUES 
-(2, 1, 5), (2, 2, 4), (2, 3, 4), (2, 4, 5), (2, 5, 3), (2, 6, 5);
--- Sources: [4, 8]
+-- 4. Détails pour l'entretien 1 (Médiatrice)
+INSERT INTO note_performance (id_entretien, num_question, note) VALUES (1,1,4), (1,2,3), (1,3,5), (1,4,4), (1,5,2), (1,6,4);
+INSERT INTO reponse_qcm (id_entretien, num_question, reponse) VALUES (1,1,1), (1,2,2), (1,3,3), (1,4,4), (1,5,1), (1,6,2), (1,7,3), (1,8,4);
+INSERT INTO axe_progres (id_entretien, label, description) VALUES (1, 'Reporting', 'Améliorer la précision des collectes de retours terrain'), (1, 'Sensibilisation', 'Augmenter la fréquence des réunions communautaires');
+INSERT INTO formation (id_entretien, titre, priorite, demandeur) VALUES (1, 'Médiation de crise', 1, 3), (1, 'Outils digitaux RH', 2, 1);
+-- [1, 10]
 
--- 5. Insertion de 8 réponses QCM par entretien (Questions 1 à 8, valeurs 1 à 4)
--- Pour l'entretien 1
-INSERT INTO reponse_qcm (id_entretien, num_question, reponse) VALUES 
-(1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 1), (1, 6, 2), (1, 7, 3), (1, 8, 4);
--- Pour l'entretien 2
-INSERT INTO reponse_qcm (id_entretien, num_question, reponse) VALUES 
-(2, 1, 4), (2, 2, 3), (2, 3, 2), (2, 4, 1), (2, 5, 4), (2, 6, 3), (2, 7, 2), (2, 8, 1);
--- Sources: [4, 8]
-
--- 6. Insertion de 2 axes de progrès par entretien
-INSERT INTO axe_progres (id_entretien, label, description) VALUES 
-(1, 'Communication digitale', 'Améliorer l''utilisation des outils de rapportage via tablette'),
-(1, 'Médiation', 'Développer des techniques de gestion de conflits communautaires'),
-(2, 'Gestion d''équipe', 'Déléguer davantage la préparation des sols'),
-(2, 'Technique', 'Se former aux nouvelles essences forestières introduites');
--- Sources: [1, 8]
-
--- 7. Insertion de 2 formations par entretien
--- Priorité : 1:Urgente, 2:Importante, 3:Souhaitable
--- Demandeur : 1:Collaborateur, 2:Manager, 3:Les deux
-INSERT INTO formation (id_entretien, titre, priorite, demandeur) VALUES 
-(1, 'Communication Non-Violente', 2, 1),
-(1, 'Outils de collecte de données Kobo', 1, 3),
-(2, 'Management de pépinière niveau 2', 2, 2),
-(2, 'Sécurité et hygiène sur site', 1, 3);
--- Sources: [3, 8]
+-- 5. Détails pour l'entretien 2 (Pépiniériste)
+INSERT INTO note_performance (id_entretien, num_question, note) VALUES (2,1,5), (2,2,4), (2,3,4), (2,4,3), (2,5,5), (2,6,4);
+INSERT INTO reponse_qcm (id_entretien, num_question, reponse) VALUES (2,1,4), (2,2,3), (2,3,2), (2,4,1), (2,5,4), (2,6,3), (2,7,2), (2,8,1);
+INSERT INTO axe_progres (id_entretien, label, description) VALUES (2, 'Qualité', 'Diminuer le taux de perte lors du repiquage'), (2, 'Suivi', 'Mieux documenter les anomalies de croissance');
+INSERT INTO formation (id_entretien, titre, priorite, demandeur) VALUES (2, 'Techniques d''arrosage optimisées', 2, 2), (2, 'Gestion des stocks de plants', 3, 1);
+-- [1, 10]
