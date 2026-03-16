@@ -18,7 +18,7 @@ CREATE TABLE employe (
   region         varchar(255) NOT NULL, 
   lieu           varchar(255) NOT NULL, 
   date_embauche  date NOT NULL, 
-  anciannete     numeric(10, 1) DEFAULT 0 NOT NULL, 
+  anciennete     numeric(10, 1) DEFAULT 0 NOT NULL, 
   PRIMARY KEY (id)) ENGINE=InnoDB;
 CREATE TABLE entretien (
   id                     int(10) NOT NULL AUTO_INCREMENT, 
