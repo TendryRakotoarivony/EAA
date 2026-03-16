@@ -6,7 +6,7 @@ CREATE TABLE axe_progres (
   PRIMARY KEY (id)) ENGINE=InnoDB;
 CREATE TABLE employe (
   id             int(10) NOT NULL AUTO_INCREMENT, 
-  matricule      int(10) NOT NULL, 
+  matricule      varchar(255) NOT NULL, 
   id_manager     int(10), 
   id_fonction    int(10) NOT NULL, 
   nom            varchar(255) NOT NULL, 
