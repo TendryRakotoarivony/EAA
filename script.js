@@ -45,62 +45,118 @@
       });
     })();
 
-    function autoFillFromMatricule(val) {
-      const mat = val.trim();
-      const emp = EMPLOYES[mat];
-      const badge = document.getElementById('lookup-badge');
+    
 
-      if (emp) {
-        // Remplir les champs identité
-        setField('inp-collab-nom', emp.nom + ' ' + emp.prenoms);
-        setField('inp-date-embauche', emp.date_embauche);
-        setField('inp-lieu', emp.lieu);
-        setField('inp-fonction', emp.fonction);
-        setField('inp-anciennete', emp.anciennete);
+    async function autoFillFromMatricule(val) {
+  const mat = val.trim();
+  const badge = document.getElementById('lookup-badge');
 
-        // Synchroniser signatures
-        const fullName = emp.nom + ' ' + emp.prenoms;
-        const sigC = document.getElementById('sig_collab_auto');
-        const sigCn = document.querySelector('[name="sig_collab_nom"]');
-        if (sigC) sigC.value = fullName;
-        if (sigCn) sigCn.value = fullName;
+  if (!mat) {
+    clearEmployeeFields();
+    if (badge) badge.style.display = 'none';
+    return;
+  }
 
-        // Pré-remplir missions si disponible
-        const missions = MISSIONS_PAR_POSTE[emp.fonction];
-        if (missions) {
-          const mEl = document.querySelector('[name="missions_principales"]');
-          if (mEl && !mEl.value) {
-            mEl.value = missions;
-          }
-        }
+  try {
+    const response = await fetch(`api/employe_get.php?matricule=${encodeURIComponent(mat)}`);
+    const json = await response.json();
 
-        // Badge de confirmation
-        if (badge) {
-          badge.textContent = '✓ ' + emp.nom + ' ' + emp.prenoms + ' — ' + emp.fonction + ' (' + emp.lieu + ')';
-          badge.style.display = 'flex';
-          badge.className = 'lookup-badge found';
-        }
-      } else if (mat.length > 0) {
-        // Effacer les champs si matricule inconnu
-        ['inp-collab-nom', 'inp-date-embauche', 'inp-lieu', 'inp-fonction', 'inp-anciennete'].forEach(id => setField(id, ''));
-        if (badge) {
-          badge.textContent = '✗ Matricule introuvable dans la base — vérifiez ou remplissez manuellement';
-          badge.style.display = 'flex';
-          badge.className = 'lookup-badge notfound';
-        }
-      } else {
-        if (badge) badge.style.display = 'none';
+    if (!json.success) {
+      clearEmployeeFields();
+
+      if (badge) {
+        badge.textContent = '✗ Matricule introuvable dans la base';
+        badge.style.display = 'flex';
+        badge.className = 'lookup-badge notfound';
       }
+      return;
     }
 
-    function setField(id, value) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.value = value;
-        el.style.fontStyle = 'normal';
-        el.style.color = '';
-      }
+    const emp = json.data;
+
+    setField('inp-employe-id', emp.id);
+    setField('inp-fonction-id', emp.id_fonction);
+    setField('inp-manager-id', emp.manager_id || '');
+
+    setField('inp-collab-nom', emp.nom_complet);
+    setField('inp-date-embauche', emp.date_embauche);
+    setField('inp-lieu', emp.lieu);
+    setField('inp-fonction', emp.fonction);
+    setField('inp-anciennete', emp.anciennete);
+
+    const managerNomInput = document.querySelector('[name="manager_nom"]');
+    const managerFonctionInput = document.querySelector('[name="manager_fonction"]');
+
+    if (managerNomInput) managerNomInput.value = emp.manager_nom_complet || '';
+    if (managerFonctionInput) managerFonctionInput.value = emp.manager_fonction || '';
+
+    const missionsEl = document.querySelector('[name="missions_principales"]');
+    if (missionsEl && !missionsEl.value) {
+      missionsEl.value = emp.missions || '';
     }
+
+    const sigC = document.getElementById('sig_collab_auto');
+    const sigCn = document.querySelector('[name="sig_collab_nom"]');
+    if (sigC) sigC.value = emp.nom_complet;
+    if (sigCn) sigCn.value = emp.nom_complet;
+
+    const sigM = document.getElementById('sig_manager_auto');
+    const sigMn = document.querySelector('[name="sig_manager_nom"]');
+    if (sigM) sigM.value = emp.manager_nom_complet || '';
+    if (sigMn) sigMn.value = emp.manager_nom_complet || '';
+
+    if (badge) {
+      badge.textContent = `✓ ${emp.nom_complet} — ${emp.fonction} (${emp.lieu})`;
+      badge.style.display = 'flex';
+      badge.className = 'lookup-badge found';
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    if (badge) {
+      badge.textContent = '✗ Erreur serveur lors du chargement';
+      badge.style.display = 'flex';
+      badge.className = 'lookup-badge notfound';
+    }
+  }
+}
+
+function clearEmployeeFields() {
+  [
+    'inp-employe-id',
+    'inp-fonction-id',
+    'inp-manager-id',
+    'inp-collab-nom',
+    'inp-date-embauche',
+    'inp-lieu',
+    'inp-fonction',
+    'inp-anciennete'
+  ].forEach(id => setField(id, ''));
+
+  const managerNomInput = document.querySelector('[name="manager_nom"]');
+  const managerFonctionInput = document.querySelector('[name="manager_fonction"]');
+  const missionsEl = document.querySelector('[name="missions_principales"]');
+
+  if (managerNomInput) managerNomInput.value = '';
+  if (managerFonctionInput) managerFonctionInput.value = '';
+  if (missionsEl) missionsEl.value = '';
+
+  const sigC = document.getElementById('sig_collab_auto');
+  const sigCn = document.querySelector('[name="sig_collab_nom"]');
+  const sigM = document.getElementById('sig_manager_auto');
+  const sigMn = document.querySelector('[name="sig_manager_nom"]');
+
+  if (sigC) sigC.value = '';
+  if (sigCn) sigCn.value = '';
+  if (sigM) sigM.value = '';
+  if (sigMn) sigMn.value = '';
+}
+
+function setField(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value ?? '';
+}
 
 
     // Auto-fill signatures from header fields
