@@ -941,6 +941,11 @@ body {
     letter-spacing: 0.03em;
 }
 
+.btn-view {
+    width: 100%;
+    padding: 6px 9px;
+}
+
 .btn-secondary {
     background: var(--white);
     color: var(--text);
@@ -959,6 +964,11 @@ body {
 .btn-primary:hover {
     background: var(--mid);
     box-shadow: 0 4px 16px rgba(26, 26, 46, 0.25);
+}
+
+.btn-no-action:hover {
+    cursor: default;
+    border-color: var(--border);
 }
 
 .btn-gold {

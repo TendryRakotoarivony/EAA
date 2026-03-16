@@ -63,3 +63,28 @@ ALTER TABLE note_performance ADD CONSTRAINT FKnote_perfo709938 FOREIGN KEY (id_e
 ALTER TABLE axe_progres ADD CONSTRAINT FKaxe_progre272269 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 ALTER TABLE reponse_qcm ADD CONSTRAINT FKreponse_qc737900 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 ALTER TABLE formation ADD CONSTRAINT FKformation155155 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
+
+CREATE VIEW liste_entretien AS
+SELECT
+    entretien.id AS id_entretien,
+    entretien.date_entretien,
+    employe.id AS employe_id,
+    employe.matricule,
+    employe.id_manager,
+    employe.id_fonction,
+    employe.nom,
+    employe.prenoms,
+    manager.prenoms AS nom_manager,
+    fonction.label AS fonction,
+    (
+        SELECT AVG(np.note)
+        FROM note_performance np
+        JOIN entretien e ON np.id_entretien = e.id
+        WHERE e.id_employe = employe.id
+    ) AS note_moyenne
+FROM 
+    entretien
+    JOIN employe ON entretien.id_employe = employe.id
+    LEFT JOIN fonction ON employe.id_fonction = fonction.id
+    LEFT JOIN employe AS manager ON employe.id_manager = manager.id
+ORDER BY entretien.date_entretien DESC;
