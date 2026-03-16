@@ -1,0 +1,65 @@
+CREATE TABLE axe_progres (
+  id           int(10) NOT NULL AUTO_INCREMENT, 
+  id_entretien int(10) NOT NULL, 
+  label        varchar(255) NOT NULL, 
+  description  text NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE employes (
+  id             int(10) NOT NULL AUTO_INCREMENT, 
+  matricule      int(10) NOT NULL, 
+  id_manager     int(10), 
+  id_fonction    int(10) NOT NULL, 
+  nom            varchar(255) NOT NULL, 
+  prenoms        varchar(255) NOT NULL, 
+  classification varchar(255) NOT NULL, 
+  groupe         varchar(255) NOT NULL, 
+  departement    varchar(255) NOT NULL, 
+  service        varchar(255) NOT NULL, 
+  region         varchar(255) NOT NULL, 
+  lieu           varchar(255) NOT NULL, 
+  date_embauche  date NOT NULL, 
+  anciannete     numeric(10, 1) DEFAULT 0 NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE entretien (
+  id                     int(10) NOT NULL AUTO_INCREMENT, 
+  id_employe             int(10) NOT NULL, 
+  date_entretien         date NOT NULL, 
+  mission_ponctuelles    varchar(255), 
+  niveau                 int(10), 
+  commentaire_bilan      text, 
+  commentaire_foramtion  text, 
+  commentaire_libre      text, 
+  date_signature_colab   date NOT NULL, 
+  date_signature_manager date NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE fonction (
+  id       int(10) NOT NULL AUTO_INCREMENT, 
+  label    varchar(255) NOT NULL, 
+  missions text NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE formation (
+  id           int(10) NOT NULL AUTO_INCREMENT, 
+  id_entretien int(10) NOT NULL, 
+  titre        varchar(255) NOT NULL, 
+  priorite     int(10) NOT NULL, 
+  demandeur    int(10) NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE note_performance (
+  id           int(10) NOT NULL AUTO_INCREMENT, 
+  id_entretien int(10) NOT NULL, 
+  num_question int(10) NOT NULL, 
+  note         int(10) NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+CREATE TABLE reponse_qcm (
+  id           int(10) NOT NULL AUTO_INCREMENT, 
+  id_entretien int(10) NOT NULL, 
+  num_question int(10) NOT NULL, 
+  reponse      int(10) NOT NULL, 
+  PRIMARY KEY (id)) ENGINE=InnoDB;
+ALTER TABLE employes ADD CONSTRAINT FKemployes54492 FOREIGN KEY (id_fonction) REFERENCES fonction (id);
+ALTER TABLE employes ADD CONSTRAINT FKemployes560581 FOREIGN KEY (id_manager) REFERENCES employes (id);
+ALTER TABLE entretien ADD CONSTRAINT FKentretien833920 FOREIGN KEY (id_employe) REFERENCES employes (id);
+ALTER TABLE note_performance ADD CONSTRAINT FKnote_perfo709938 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
+ALTER TABLE axe_progres ADD CONSTRAINT FKaxe_progre272269 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
+ALTER TABLE reponse_qcm ADD CONSTRAINT FKreponse_qc737900 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
+ALTER TABLE formation ADD CONSTRAINT FKformation155155 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
