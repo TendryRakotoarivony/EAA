@@ -16,26 +16,26 @@
 
   <!-- HEADER -->
   <header class="header">
-  <div class="header-brand">
-    <div class="brand-logo">
-      <img src="logo-bondy.png" alt="Logo Bôndy International">
+    <div class="header-brand">
+      <div class="brand-logo">
+        <img src="logo-bondy.png" alt="Logo Bôndy International">
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">Bôndy International</div>
+        <div class="brand-sub">Direction des Ressources Humaines</div>
+      </div>
     </div>
-    <div class="brand-text">
-      <div class="brand-name">Bôndy International</div>
-      <div class="brand-sub">Direction des Ressources Humaines</div>
+
+    <div class="header-title">
+      <h1>Entretien Annuel d'Activité</h1>
+      <p>Formulaire d'évaluation annuelle — Confidentiel</p>
     </div>
-  </div>
 
-  <div class="header-title">
-    <h1>Entretien Annuel d'Activité</h1>
-    <p>Formulaire d'évaluation annuelle — Confidentiel</p>
-  </div>
-
-  <div class="header-badge">
-    <span>Année évaluée</span>
-    <strong id="annee-label">2025</strong>
-  </div>
-</header>
+    <div class="header-badge">
+      <span>Année évaluée</span>
+      <strong id="annee-label">2025</strong>
+    </div>
+  </header>
 
   <!-- LÉGENDE -->
   <div class="legend-bar">
@@ -110,6 +110,9 @@
             <div class="field">
               <label>Date de l'entretien</label>
               <input type="date" name="date_entretien" />
+              <input type="hidden" id="inp-employe-id" name="id_employe">
+              <input type="hidden" id="inp-fonction-id" name="id_fonction">
+              <input type="hidden" id="inp-manager-id" name="id_manager">
             </div>
           </div>
           <div class="notice">
@@ -136,9 +139,9 @@
 
           <!-- Missions -->
           <div class="field collab">
-            <label>Missions principales du poste 
-            <textarea name="missions_principales"
-              placeholder="Décrivez vos missions principales telles que définies dans votre fiche de poste ou contrat…"></textarea>
+            <label>Missions principales du poste
+              <textarea name="missions_principales"
+                placeholder="Décrivez vos missions principales telles que définies dans votre fiche de poste ou contrat…"></textarea>
           </div>
           <div class="field collab">
             <label>Missions ponctuelles / transversales <span class="role-tag collab">Collaborateur</span></label>
@@ -359,8 +362,8 @@
               <div class="axe-col-head">Axe de progrès <span class="role-tag manager">Manager</span></div>
               <div class="axe-col-head">Moyens / Actions à mettre en œuvre <span class="role-tag manager">Manager</span>
               </div>
-             
-             
+
+
             </div>
 
             <div id="axes-container">
@@ -371,7 +374,7 @@
                 <div><textarea name="axe_1_moyen" placeholder="Ex : Formation rédaction, lectures ciblées…"
                     style="min-height:80px;border:1.5px solid var(--manager-border);background:var(--manager-bg);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px;width:100%;resize:vertical;color:var(--text);"></textarea>
                 </div>
-               
+
               </div>
               <div class="axe-row">
                 <div><textarea name="axe_2" placeholder="Axe de progrès n°2…"
@@ -380,7 +383,7 @@
                 <div><textarea name="axe_2_moyen" placeholder="Moyens envisagés…"
                     style="min-height:80px;border:1.5px solid var(--manager-border);background:var(--manager-bg);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px;width:100%;resize:vertical;color:var(--text);"></textarea>
                 </div>
-                
+
               </div>
             </div>
 
@@ -868,7 +871,7 @@
             </div>
 
           </div>
-       <button type="button" class="add-btn" id="add-formation-btn">＋ Ajouter une formation</button>
+          <button type="button" class="add-btn" id="add-formation-btn">＋ Ajouter une formation</button>
 
           <div class="field manager" style="margin-top:8px;">
             <label>Commentaires du manager sur le plan de formation <span

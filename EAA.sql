@@ -89,5 +89,4 @@ FROM
     LEFT JOIN employe AS manager ON employe.id_manager = manager.id
 ORDER BY entretien.date_entretien DESC;
 
-
 ALTER TABLE entretien CHANGE commentaire_foramtion commentaire_formation TEXT;
