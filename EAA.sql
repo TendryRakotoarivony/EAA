@@ -4,7 +4,7 @@ CREATE TABLE axe_progres (
   label        varchar(255) NOT NULL, 
   description  text NOT NULL, 
   PRIMARY KEY (id)) ENGINE=InnoDB;
-CREATE TABLE employes (
+CREATE TABLE employe (
   id             int(10) NOT NULL AUTO_INCREMENT, 
   matricule      int(10) NOT NULL, 
   id_manager     int(10), 
@@ -56,9 +56,9 @@ CREATE TABLE reponse_qcm (
   num_question int(10) NOT NULL, 
   reponse      int(10) NOT NULL, 
   PRIMARY KEY (id)) ENGINE=InnoDB;
-ALTER TABLE employes ADD CONSTRAINT FKemployes54492 FOREIGN KEY (id_fonction) REFERENCES fonction (id);
-ALTER TABLE employes ADD CONSTRAINT FKemployes560581 FOREIGN KEY (id_manager) REFERENCES employes (id);
-ALTER TABLE entretien ADD CONSTRAINT FKentretien833920 FOREIGN KEY (id_employe) REFERENCES employes (id);
+ALTER TABLE employe ADD CONSTRAINT FKemploye375684 FOREIGN KEY (id_fonction) REFERENCES fonction (id);
+ALTER TABLE employe ADD CONSTRAINT FKemploye449343 FOREIGN KEY (id_manager) REFERENCES employe (id);
+ALTER TABLE entretien ADD CONSTRAINT FKentretien707493 FOREIGN KEY (id_employe) REFERENCES employe (id);
 ALTER TABLE note_performance ADD CONSTRAINT FKnote_perfo709938 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 ALTER TABLE axe_progres ADD CONSTRAINT FKaxe_progre272269 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 ALTER TABLE reponse_qcm ADD CONSTRAINT FKreponse_qc737900 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
