@@ -41,8 +41,8 @@ CREATE TABLE formation (
   id           int(10) NOT NULL AUTO_INCREMENT, 
   id_entretien int(10) NOT NULL, 
   titre        varchar(255) NOT NULL, 
-  priorite     int(10) NOT NULL, 
-  demandeur    int(10) NOT NULL, 
+  priorite     int(10) NOT NULL comment '1:Urgente, 2:Importante, 3:Souhaitable', 
+  demandeur    int(10) NOT NULL comment '1:Collaborateur, 2:Manager, 3:Les deux', 
   PRIMARY KEY (id)) ENGINE=InnoDB;
 CREATE TABLE note_performance (
   id           int(10) NOT NULL AUTO_INCREMENT, 
