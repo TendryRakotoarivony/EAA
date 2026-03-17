@@ -4,6 +4,7 @@ try {
     $db = getConnection();
     $sql = "SELECT * FROM liste_entretien";
     $entretiens = $db->query($sql)->fetchAll();
+  
 } catch (\Throwable $th) {
     die('Erreur lors de la récupération des entretiens : ' . $th->getMessage());
 }
@@ -84,7 +85,7 @@ try {
                     <td><?= $ent['fonction'] ?></td>
                     <td><?= isset($ent['note_moyenne']) ? number_format($ent['note_moyenne'], 2, ',', '') : 'N/A' ?></td>
                     <td>
-                        <a href="./entretien_detail.php?id=<?= $ent['id'] ?>">
+                        <a href="./entretien_detail.php?id=<?= $ent['id_entretien'] ?>">
                             <button class="btn btn-view btn-primary">Voir</button>
                         </a>
                     </td>
