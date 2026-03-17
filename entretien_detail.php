@@ -422,7 +422,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_style_management" id="qcm_style_management_a"
-                      value="Directif et clair dans ses attentes" data-score="4" <?= $reponses['1'] == 4 ? 'checked' : '' ?>>
+                      value="Directif et clair dans ses attentes" data-score="4" <?= $reponses['1'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_style_management_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Directif et clair dans ses attentes</span>
@@ -431,7 +431,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_style_management" id="qcm_style_management_b"
-                      value="Participatif et à l'écoute de l'équipe" data-score="3" <?= $reponses['1'] == 3 ? 'checked' : '' ?>>
+                      value="Participatif et à l'écoute de l'équipe" data-score="3" <?= $reponses['1'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_style_management_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Participatif et à l'écoute de l'équipe</span>
@@ -440,7 +440,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_style_management" id="qcm_style_management_c"
-                      value="Peu présent ou distant au quotidien" data-score="2" <?= $reponses['1'] == 2 ? 'checked' : '' ?>>
+                      value="Peu présent ou distant au quotidien" data-score="2" <?= $reponses['1'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_style_management_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Peu présent ou distant au quotidien</span>
@@ -449,7 +449,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_style_management" id="qcm_style_management_d"
-                      value="Incohérent ou imprévisible" data-score="1" <?= $reponses['1'] == 1 ? 'checked' : '' ?>>
+                      value="Incohérent ou imprévisible" data-score="1" <?= $reponses['1'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_style_management_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Incohérent ou imprévisible</span>
@@ -465,7 +465,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_aide_objectifs" id="qcm_aide_objectifs_a"
-                      value="Toujours — il/elle me guide activement" data-score="4" <?= $reponses['2'] == 4 ? 'checked' : '' ?>>
+                      value="Toujours — il/elle me guide activement" data-score="4" <?= $reponses['2'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_aide_objectifs_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Toujours</span>
@@ -474,7 +474,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_aide_objectifs" id="qcm_aide_objectifs_b"
-                      value="Souvent — quand je lui demande" data-score="3" <?= $reponses['2'] == 3 ? 'checked' : '' ?>>
+                      value="Souvent — quand je lui demande" data-score="3" <?= $reponses['2'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_aide_objectifs_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Souvent</span>
@@ -483,7 +483,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_aide_objectifs" id="qcm_aide_objectifs_c"
-                      value="Rarement — je me débrouille seul(e)" data-score="2" <?= $reponses['2'] == 2 ? 'checked' : '' ?>>
+                      value="Rarement — je me débrouille seul(e)" data-score="2" <?= $reponses['2'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_aide_objectifs_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Rarement</span>
@@ -492,7 +492,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_aide_objectifs" id="qcm_aide_objectifs_d"
-                      value="Jamais — aucun soutien" data-score="1" <?= $reponses['2'] == 1 ? 'checked' : '' ?>>
+                      value="Jamais — aucun soutien" data-score="1" <?= $reponses['2'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_aide_objectifs_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Jamais</span>
@@ -509,7 +509,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_clarte_consigne" id="qcm_clarte_consigne_a"
-                      value="Toujours très claires" data-score="4" <?= $reponses['3'] == 4 ? 'checked' : '' ?>>
+                      value="Toujours très claires" data-score="4" <?= $reponses['3'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_clarte_consigne_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Toujours très claires</span>
@@ -518,7 +518,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_clarte_consigne" id="qcm_clarte_consigne_b"
-                      value="Généralement claires" data-score="3" <?= $reponses['3'] == 3 ? 'checked' : '' ?>>
+                      value="Généralement claires" data-score="3" <?= $reponses['3'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_clarte_consigne_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Généralement claires</span>
@@ -527,7 +527,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_clarte_consigne" id="qcm_clarte_consigne_c" 
-                    value="Parfois confuses" data-score="2" <?= $reponses['3'] == 2 ? 'checked' : '' ?>>
+                    value="Parfois confuses" data-score="2" <?= $reponses['3'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_clarte_consigne_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Parfois confuses</span>
@@ -536,7 +536,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_clarte_consigne" id="qcm_clarte_consigne_d"
-                      value="Souvent floues ou contradictoires" data-score="1" <?= $reponses['3'] == 1 ? 'checked' : '' ?>>
+                      value="Souvent floues ou contradictoires" data-score="1" <?= $reponses['3'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_clarte_consigne_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Souvent floues ou contradictoires</span>
@@ -552,7 +552,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_reconnaissance" id="qcm_reconnaissance_a"
-                      value="Oui, régulièrement et sincèrement" data-score="4" <?= $reponses['4'] == 4 ? 'checked' : '' ?>>
+                      value="Oui, régulièrement et sincèrement" data-score="4" <?= $reponses['4'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_reconnaissance_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Oui, régulièrement et sincèrement</span>
@@ -561,7 +561,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_reconnaissance" id="qcm_reconnaissance_b"
-                      value="Oui, de temps en temps" data-score="3" <?= $reponses['4'] == 3 ? 'checked' : '' ?>>
+                      value="Oui, de temps en temps" data-score="3" <?= $reponses['4'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_reconnaissance_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Oui, de temps en temps</span>
@@ -570,7 +570,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_reconnaissance" id="qcm_reconnaissance_c" value="Rarement"
-                      data-score="2" <?= $reponses['4'] == 2 ? 'checked' : '' ?>>
+                      data-score="2" <?= $reponses['4'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_reconnaissance_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Rarement</span>
@@ -579,7 +579,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_reconnaissance" id="qcm_reconnaissance_d" value="Non, jamais"
-                      data-score="1" <?= $reponses['4'] == 1 ? 'checked' : '' ?>>
+                      data-score="1" <?= $reponses['4'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_reconnaissance_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Non, jamais</span>
@@ -596,7 +596,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_communication" id="qcm_communication_a"
-                      value="Excellente — transparente et régulière" data-score="4" <?= $reponses['5'] == 4 ? 'checked' : '' ?>>
+                      value="Excellente — transparente et régulière" data-score="4" <?= $reponses['5'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_communication_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Excellente</span>
@@ -605,7 +605,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_communication" id="qcm_communication_b"
-                      value="Bonne — les infos essentielles circulent" data-score="3" <?= $reponses['5'] == 3 ? 'checked' : '' ?>>
+                      value="Bonne — les infos essentielles circulent" data-score="3" <?= $reponses['5'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_communication_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Bonne</span>
@@ -614,7 +614,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_communication" id="qcm_communication_c"
-                      value="Insuffisante — on manque souvent d'infos" data-score="2" <?= $reponses['5'] == 2 ? 'checked' : '' ?>>
+                      value="Insuffisante — on manque souvent d'infos" data-score="2" <?= $reponses['5'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_communication_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Insuffisante</span>
@@ -623,7 +623,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_communication" id="qcm_communication_d"
-                      value="Mauvaise — communication quasi absente" data-score="1" <?= $reponses['5'] == 1 ? 'checked' : '' ?>>
+                      value="Mauvaise — communication quasi absente" data-score="1" <?= $reponses['5'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_communication_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Mauvaise</span>
@@ -640,7 +640,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_gestion_tension" id="qcm_gestion_tension_a"
-                      value="Oui, toujours avec équité et rapidité" data-score="4" <?= $reponses['6'] == 4 ? 'checked' : '' ?>>
+                      value="Oui, toujours avec équité et rapidité" data-score="4" <?= $reponses['6'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_gestion_tension_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Oui, toujours</span>
@@ -649,7 +649,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_gestion_tension" id="qcm_gestion_tension_b"
-                      value="Souvent, mais pas systématiquement" data-score="3" <?= $reponses['6'] == 3 ? 'checked' : '' ?>>
+                      value="Souvent, mais pas systématiquement" data-score="3" <?= $reponses['6'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_gestion_tension_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Souvent</span>
@@ -658,7 +658,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_gestion_tension" id="qcm_gestion_tension_c"
-                      value="Rarement — les problèmes traînent" data-score="2" <?= $reponses['6'] == 2 ? 'checked' : '' ?>>
+                      value="Rarement — les problèmes traînent" data-score="2" <?= $reponses['6'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_gestion_tension_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Rarement</span>
@@ -667,7 +667,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_gestion_tension" id="qcm_gestion_tension_d"
-                      value="Non — les situations difficiles ne sont pas gérées" data-score="1" <?= $reponses['6'] == 1 ? 'checked' : '' ?>>
+                      value="Non — les situations difficiles ne sont pas gérées" data-score="1" <?= $reponses['6'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_gestion_tension_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Non</span>
@@ -684,7 +684,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_developpement" id="qcm_developpement_a"
-                      value="Oui, activement et régulièrement" data-score="4" <?= $reponses['7'] == 4 ? 'checked' : '' ?>>
+                      value="Oui, activement et régulièrement" data-score="4" <?= $reponses['7'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_developpement_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Oui, activement et régulièrement</span>
@@ -693,7 +693,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_developpement" id="qcm_developpement_b"
-                      value="Parfois — selon les ressources disponibles" data-score="3" <?= $reponses['7'] == 3 ? 'checked' : '' ?>>
+                      value="Parfois — selon les ressources disponibles" data-score="3" <?= $reponses['7'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_developpement_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Parfois</span>
@@ -702,7 +702,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_developpement" id="qcm_developpement_c"
-                      value="Peu — ce n'est pas sa priorité visible" data-score="2" <?= $reponses['7'] == 2 ? 'checked' : '' ?>>
+                      value="Peu — ce n'est pas sa priorité visible" data-score="2" <?= $reponses['7'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_developpement_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Peu</span>
@@ -711,7 +711,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_developpement" id="qcm_developpement_d"
-                      value="Non — aucun effort dans ce sens" data-score="1" <?= $reponses['7'] == 1 ? 'checked' : '' ?>>
+                      value="Non — aucun effort dans ce sens" data-score="1" <?= $reponses['7'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_developpement_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Non</span>
@@ -727,7 +727,7 @@ try {
                 <div class="qcm-options">
                   <div class="appr-card">
                     <input type="radio" name="qcm_eval_globale_manager" id="qcm_eval_globale_manager_a"
-                      value="Excellent(e) manager" data-score="4" <?= $reponses['8'] == 4 ? 'checked' : '' ?>>
+                      value="Excellent(e) manager" data-score="4" <?= $reponses['8'] == 4 ? 'checked' : '' ?> disabled>
                     <label for="qcm_eval_globale_manager_a">
                       <span class="qcm-badge a">A</span>
                       <span class="qcm-title">Excellent(e) manager</span>
@@ -736,7 +736,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_eval_globale_manager" id="qcm_eval_globale_manager_b"
-                      value="Bon(ne) manager — quelques axes à améliorer" data-score="3" <?= $reponses['8'] == 3 ? 'checked' : '' ?>>
+                      value="Bon(ne) manager — quelques axes à améliorer" data-score="3" <?= $reponses['8'] == 3 ? 'checked' : '' ?> disabled>
                     <label for="qcm_eval_globale_manager_b">
                       <span class="qcm-badge b">B</span>
                       <span class="qcm-title">Bon(ne) manager</span>
@@ -745,7 +745,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_eval_globale_manager" id="qcm_eval_globale_manager_c"
-                      value="Manager moyen(ne) — des progrès importants à faire" data-score="2" <?= $reponses['8'] == 2 ? 'checked' : '' ?>>
+                      value="Manager moyen(ne) — des progrès importants à faire" data-score="2" <?= $reponses['8'] == 2 ? 'checked' : '' ?> disabled>
                     <label for="qcm_eval_globale_manager_c">
                       <span class="qcm-badge c">C</span>
                       <span class="qcm-title">Manager moyen(ne)</span>
@@ -754,7 +754,7 @@ try {
                   </div>
                   <div class="appr-card">
                     <input type="radio" name="qcm_eval_globale_manager" id="qcm_eval_globale_manager_d"
-                      value="Management à revoir profondément" data-score="1" <?= $reponses['8'] == 1 ? 'checked' : '' ?>>
+                      value="Management à revoir profondément" data-score="1" <?= $reponses['8'] == 1 ? 'checked' : '' ?> disabled>
                     <label for="qcm_eval_globale_manager_d">
                       <span class="qcm-badge d">D</span>
                       <span class="qcm-title">Management à revoir profondément</span>
