@@ -6,7 +6,7 @@ SELECT
     employe.id_manager,
     employe.id_fonction,
     CONCAT(employe.nom, ' ', employe.prenoms) AS nom_complet,
-    manager.prenoms AS nom_manager,
+    CONCAT(manager.nom, ' ', manager.prenoms) AS nom_manager,
     fonction.label AS fonction,
     (
         SELECT AVG(np.note)
@@ -19,7 +19,13 @@ FROM
     JOIN employe ON entretien.id_employe = employe.id
     LEFT JOIN fonction ON employe.id_fonction = fonction.id
     LEFT JOIN employe AS manager ON employe.id_manager = manager.id
-ORDER BY entretien.date_entretien DESC;
+WHERE 
+    entretien.id = (
+        SELECT MAX(e2.id) 
+        FROM entretien e2 
+        WHERE e2.id_employe = employe.id
+    )
+ORDER BY entretien.date_entretien DESC, nom_complet ASC;
 
 SELECT
     entretien.*,
