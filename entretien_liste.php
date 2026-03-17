@@ -85,7 +85,7 @@ try {
                     <td><?= $ent['fonction'] ?></td>
                     <td><?= isset($ent['note_moyenne']) ? number_format($ent['note_moyenne'], 2, ',', '') : 'N/A' ?></td>
                     <td>
-                        <a href="./entretien_detail.php?id=<?= $ent['id_entretien'] ?>">
+                        <a href="./entretien_detail.php?id=<?= $ent['id'] ?>">
                             <button class="btn btn-view btn-primary">Voir</button>
                         </a>
                     </td>
