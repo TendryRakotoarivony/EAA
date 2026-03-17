@@ -1,7 +1,7 @@
 <?php
     function getConnection() {
         $user = 'root';
-        $pass = 'root';
+        $pass = 'Tendry3922$';
         $dsn  = 'mysql:host=localhost;dbname=eaa;charset=utf8';
         try {
             return new PDO($dsn, $user, $pass, [
