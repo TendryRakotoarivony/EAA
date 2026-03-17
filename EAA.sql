@@ -24,10 +24,10 @@ CREATE TABLE entretien (
   id                     int(10) NOT NULL AUTO_INCREMENT, 
   id_employe             int(10) NOT NULL, 
   date_entretien         date NOT NULL, 
-  mission_ponctuelles    varchar(255), 
-  niveau                 int(10), 
+  mission_ponctuelles    text, 
+  niveau                 int(10) comment '1:Debutant, 2:Intermediaire, 3:Confirme, 4:Senior', 
   commentaire_bilan      text, 
-  commentaire_foramtion  text, 
+  commentaire_formation  text, 
   commentaire_libre      text, 
   date_signature_colab   date NOT NULL, 
   date_signature_manager date NOT NULL, 
@@ -49,6 +49,7 @@ CREATE TABLE note_performance (
   id_entretien int(10) NOT NULL, 
   num_question int(10) NOT NULL, 
   note         int(10) NOT NULL, 
+  commentaire  text,
   PRIMARY KEY (id)) ENGINE=InnoDB;
 CREATE TABLE reponse_qcm (
   id           int(10) NOT NULL AUTO_INCREMENT, 
@@ -64,17 +65,17 @@ ALTER TABLE axe_progres ADD CONSTRAINT FKaxe_progre272269 FOREIGN KEY (id_entret
 ALTER TABLE reponse_qcm ADD CONSTRAINT FKreponse_qc737900 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 ALTER TABLE formation ADD CONSTRAINT FKformation155155 FOREIGN KEY (id_entretien) REFERENCES entretien (id);
 
+DROP VIEW liste_entretien;
 CREATE VIEW liste_entretien AS
 SELECT
-    entretien.id AS id_entretien,
+    entretien.id,
     entretien.date_entretien,
     employe.id AS employe_id,
     employe.matricule,
     employe.id_manager,
     employe.id_fonction,
-    employe.nom,
-    employe.prenoms,
-    manager.prenoms AS nom_manager,
+    CONCAT(employe.nom, ' ', employe.prenoms) AS nom_complet,
+    CONCAT(manager.nom, ' ', manager.prenoms) AS nom_manager,
     fonction.label AS fonction,
     (
         SELECT AVG(np.note)
@@ -88,3 +89,24 @@ FROM
     LEFT JOIN fonction ON employe.id_fonction = fonction.id
     LEFT JOIN employe AS manager ON employe.id_manager = manager.id
 ORDER BY entretien.date_entretien DESC;
+
+DROP VIEW detail_entretien;
+CREATE VIEW detail_entretien AS
+SELECT
+    entretien.*,
+    employe.matricule,
+    CONCAT(employe.nom, ' ', employe.prenoms) AS nom_complet,
+    employe.date_embauche,
+    CONCAT(employe.region, ' ', employe.lieu) AS affectation,
+    fonction.label AS fonction,
+    employe.anciennete,
+    CONCAT(manager.nom, ' ', manager.prenoms) AS nom_manager,
+    f_manager.label AS fonction_manager,
+    fonction.missions AS missions_fonction
+FROM
+    entretien
+    JOIN employe ON entretien.id_employe = employe.id
+    JOIN fonction ON employe.id_fonction = fonction.id
+    JOIN employe as manager ON employe.id_manager = manager.id
+    JOIN fonction as f_manager ON manager.id_fonction = f_manager.id
+;

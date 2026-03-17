@@ -5,8 +5,7 @@ try {
     $sql = "SELECT * FROM liste_entretien";
     $entretiens = $db->query($sql)->fetchAll();
 } catch (\Throwable $th) {
-    print_r($th->getMessage());
-    die('Erreur lors de la récupération des employés : ' . $th->getMessage());
+    die('Erreur lors de la récupération des entretiens : ' . $th->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -80,12 +79,14 @@ try {
                 <tr>
                     <td><?= $ent['date_entretien'] ?></td>
                     <td><?= $ent['matricule'] ?></td>
-                    <td style="font-weight:500;"><?= $ent['nom'] ?> <?= $ent['prenoms'] ?></td>
+                    <td style="font-weight:500;"><?= $ent['nom_complet'] ?></td>
                     <td><?= $ent['nom_manager'] ?></td>
                     <td><?= $ent['fonction'] ?></td>
                     <td><?= isset($ent['note_moyenne']) ? number_format($ent['note_moyenne'], 2, ',', '') : 'N/A' ?></td>
                     <td>
-                        <button class="btn btn-view btn-primary">Voir</button>
+                        <a href="./entretien_detail.php?id=<?= $ent['id'] ?>">
+                            <button class="btn btn-view btn-primary">Voir</button>
+                        </a>
                     </td>
                 </tr>
             <?php } ?>
