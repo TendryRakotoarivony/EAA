@@ -1460,3 +1460,16 @@ body {
     color: var(--muted);
     font-size: 12px;
 }
+
+.sort-header {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.sort-header:hover {
+    color: rgba(255, 255, 255, 0.95);
+}

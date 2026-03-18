@@ -8,10 +8,21 @@ try {
     $fonction = isset($_GET['fonction']) ? trim($_GET['fonction']) : '';
     $items_per_page = isset($_GET['items_per_page']) ? intval($_GET['items_per_page']) : 50;
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : '';
+    $sort_dir = isset($_GET['sort_dir']) ? $_GET['sort_dir'] : 'ASC';
 
     // Ensure items_per_page is one of the allowed values
     if (!in_array($items_per_page, [10, 20, 50])) {
         $items_per_page = 50;
+    }
+
+    // Validate sort parameters
+    $allowed_sort_columns = ['date_entretien', 'nom_complet', 'nom_manager', 'fonction', 'note_moyenne'];
+    if (!in_array($sort_by, $allowed_sort_columns)) {
+        $sort_by = '';
+    }
+    if (!in_array($sort_dir, ['ASC', 'DESC'])) {
+        $sort_dir = 'ASC';
     }
 
     // Build WHERE clause
@@ -34,6 +45,12 @@ try {
         }
     }
 
+    // Build ORDER BY clause
+    $order_clause = '';
+    if ($sort_by) {
+        $order_clause = " ORDER BY " . $sort_by . " " . $sort_dir;
+    }
+
     // Get total count
     $count_sql = "SELECT COUNT(*) as total FROM liste_entretien" . $where_clause;
     $count_stmt = $db->prepare($count_sql);
@@ -53,7 +70,7 @@ try {
     $offset = ($page - 1) * $items_per_page;
 
     // Get paginated results
-    $sql = "SELECT * FROM liste_entretien" . $where_clause . " LIMIT :limit OFFSET :offset";
+    $sql = "SELECT * FROM liste_entretien" . $where_clause . $order_clause . " LIMIT :limit OFFSET :offset";
     $stmt = $db->prepare($sql);
     foreach ($bindings as $key => $value) {
         $stmt->bindValue($key, $value);
@@ -67,6 +84,24 @@ try {
     $fonctions = $db->query($sql_fonction)->fetchAll();
 } catch (\Throwable $th) {
     die('Erreur lors de la récupération des entretiens : ' . $th->getMessage());
+}
+
+// Helper function to generate sort URL
+function getSortUrl($column, $current_sort_by, $current_sort_dir, $base_params) {
+    $new_dir = ($column == $current_sort_by && $current_sort_dir == 'ASC') ? 'DESC' : 'ASC';
+    return '?' . http_build_query(array_merge($base_params, [
+        'sort_by' => $column,
+        'sort_dir' => $new_dir,
+        'page' => 1
+    ]));
+}
+
+// Helper function to get sort indicator
+function getSortIndicator($column, $current_sort_by, $current_sort_dir) {
+    if ($column == $current_sort_by) {
+        return $current_sort_dir == 'ASC' ? ' ↑' : ' ↓';
+    }
+    return '';
 }
 ?>
 <!DOCTYPE html>
@@ -149,12 +184,12 @@ try {
     <table class="perf-table">
         <thead>
             <tr>
-                <th>Date de l'entretien</th>
+                <th><a href="<?= getSortUrl('date_entretien', $sort_by, $sort_dir, ['matricule' => $matricule, 'search' => $search, 'fonction' => $fonction, 'items_per_page' => $items_per_page]) ?>" class="sort-header">Date de l'entretien<?= getSortIndicator('date_entretien', $sort_by, $sort_dir) ?></a></th>
                 <th>Matricule</th>
-                <th>Nom & Prenom</span>
-                <th>Manager</th>
-                <th>Fonction</th>
-                <th>Note Moyenne de la Performance</th>
+                <th><a href="<?= getSortUrl('nom_complet', $sort_by, $sort_dir, ['matricule' => $matricule, 'search' => $search, 'fonction' => $fonction, 'items_per_page' => $items_per_page]) ?>" class="sort-header">Nom & Prenom<?= getSortIndicator('nom_complet', $sort_by, $sort_dir) ?></a></th>
+                <th><a href="<?= getSortUrl('nom_manager', $sort_by, $sort_dir, ['matricule' => $matricule, 'search' => $search, 'fonction' => $fonction, 'items_per_page' => $items_per_page]) ?>" class="sort-header">Manager<?= getSortIndicator('nom_manager', $sort_by, $sort_dir) ?></a></th>
+                <th><a href="<?= getSortUrl('fonction', $sort_by, $sort_dir, ['matricule' => $matricule, 'search' => $search, 'fonction' => $fonction, 'items_per_page' => $items_per_page]) ?>" class="sort-header">Fonction<?= getSortIndicator('fonction', $sort_by, $sort_dir) ?></a></th>
+                <th><a href="<?= getSortUrl('note_moyenne', $sort_by, $sort_dir, ['matricule' => $matricule, 'search' => $search, 'fonction' => $fonction, 'items_per_page' => $items_per_page]) ?>" class="sort-header">Note Moyenne de la Performance<?= getSortIndicator('note_moyenne', $sort_by, $sort_dir) ?></a></th>
                 <th></th>
             </tr>
         </thead>
@@ -181,10 +216,10 @@ try {
     <!-- BOTTOM PAGINATION -->
     <div class="pagination-bar pagination-bar-bottom">
         <div class="pagination-controls">
-            <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1, 'items_per_page' => $items_per_page])) ?>" class="btn btn-secondary pagination-btn <?= $page == 1 ? 'disabled' : '' ?>">
+            <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1, 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) ?>" class="btn btn-secondary pagination-btn <?= $page == 1 ? 'disabled' : '' ?>">
                 <span>⟨⟨</span>
             </a>
-            <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $page - 1), 'items_per_page' => $items_per_page])) ?>" class="btn btn-secondary pagination-btn <?= $page == 1 ? 'disabled' : '' ?>">
+            <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $page - 1), 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) ?>" class="btn btn-secondary pagination-btn <?= $page == 1 ? 'disabled' : '' ?>">
                 <span>⟨</span>
             </a>
 
@@ -194,7 +229,7 @@ try {
                 $end_page = min($total_pages, $page + 2);
                 
                 if ($start_page > 1) {
-                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => 1, 'items_per_page' => $items_per_page])) . '" class="page-number">1</a>';
+                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => 1, 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) . '" class="page-number">1</a>';
                     if ($start_page > 2) {
                         echo '<span class="page-ellipsis">...</span>';
                     }
@@ -204,7 +239,7 @@ try {
                     if ($i == $page) {
                         echo '<span class="page-number page-current">' . $i . '</span>';
                     } else {
-                        echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $i, 'items_per_page' => $items_per_page])) . '" class="page-number">' . $i . '</a>';
+                        echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $i, 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) . '" class="page-number">' . $i . '</a>';
                     }
                 }
                 
@@ -212,15 +247,15 @@ try {
                     if ($end_page < $total_pages - 1) {
                         echo '<span class="page-ellipsis">...</span>';
                     }
-                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $total_pages, 'items_per_page' => $items_per_page])) . '" class="page-number">' . $total_pages . '</a>';
+                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $total_pages, 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) . '" class="page-number">' . $total_pages . '</a>';
                 }
                 ?>
             </div>
 
-            <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($total_pages, $page + 1), 'items_per_page' => $items_per_page])) ?>" class="btn btn-secondary pagination-btn <?= $page == $total_pages || $total_pages == 0 ? 'disabled' : '' ?>">
+            <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($total_pages, $page + 1), 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) ?>" class="btn btn-secondary pagination-btn <?= $page == $total_pages || $total_pages == 0 ? 'disabled' : '' ?>">
                 <span>⟩</span>
             </a>
-            <a href="?<?= http_build_query(array_merge($_GET, ['page' => $total_pages, 'items_per_page' => $items_per_page])) ?>" class="btn btn-secondary pagination-btn <?= $page == $total_pages || $total_pages == 0 ? 'disabled' : '' ?>">
+            <a href="?<?= http_build_query(array_merge($_GET, ['page' => $total_pages, 'items_per_page' => $items_per_page, 'sort_by' => $sort_by, 'sort_dir' => $sort_dir])) ?>" class="btn btn-secondary pagination-btn <?= $page == $total_pages || $total_pages == 0 ? 'disabled' : '' ?>">
                 <span>⟩⟩</span>
             </a>
         </div>
