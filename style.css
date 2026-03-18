@@ -155,6 +155,9 @@ body {
     gap: 32px;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.legend-filter {
     justify-content: center;
 }
 

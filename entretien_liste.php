@@ -107,7 +107,7 @@ try {
     </header>
 
     <!-- FILTRE -->
-    <div class="legend-bar">
+    <div class="legend-bar legend-filter">
         <form class="filter-form" action="entretien_liste.php" method="GET">
             <div class="grid-4">
                 <div class="field-group">
