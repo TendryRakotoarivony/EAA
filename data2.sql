@@ -1,19 +1,5 @@
---Script SQL d'Initialisation des Données de Test (EAA)
-
--- ================================================================================== -- Auteur : Administrateur de Base de Données / Développeur Backend Senior -- Cible : MySQL / MariaDB -- Description : Peuplement de la base EAA avec 22 entretiens et intégrité référentielle. -- ==================================================================================
-
-
---------------------------------------------------------------------------------
-
-
+-- Script SQL d'Initialisation des Données de Test (EAA)
 -- 1. Initialisation et Insertion des Fonctions
-
-
---------------------------------------------------------------------------------
-
-
--- Extraction du référentiel missions.txt et ajout des fonctions de direction -- nécessaires pour la hiérarchie des managers.
-
 INSERT INTO fonction (label, missions) VALUES 
 ('Médiatrice', 'Assurer la médiation entre les communautés locales et l''entreprise\nSensibiliser les populations aux activités et valeurs de Bôndy International\nCollecter et reporter les retours du terrain à la hiérarchie\nParticiper aux réunions communautaires'), 
 ('Chef pépiniériste', 'Superviser et coordonner toutes les activités de la pépinière\nContrôler la qualité et la conformité des plants produits\nEncadrer l''équipe de pépiniéristes et planifier les tâches hebdomadaires\nAssurer le suivi des indicateurs de production'), 
@@ -28,21 +14,11 @@ INSERT INTO fonction (label, missions) VALUES
 ('Directeur général', 'Pilotage stratégique, représentation légale et définition de la vision globale de l''entreprise.'), 
 ('Directeur Général Adjoint', 'Appui au pilotage stratégique et supervision opérationnelle des départements.');
 
-
---------------------------------------------------------------------------------
-
-
 -- 2. Insertion des Employés (Hiérarchie et Profils)
-
-
---------------------------------------------------------------------------------
-
-
 -- A. Insertion des Managers (Top Level) 
 INSERT INTO employe (matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES ('C004', NULL, (SELECT id FROM fonction WHERE label = 'Directeur général'), 'TASSO', 'Gabriel', 'Consultant', 'Consultant', 'Générale', 'Générale', 'ANALAMANGA', 'Siège', '2021-10-11', 4.3), ('C068', NULL, (SELECT id FROM fonction WHERE label = 'Directeur Général Adjoint'), 'LEVREL', 'Robin Adrian', 'Consultant', 'Consultant', 'Générale', 'Générale', 'ANALAMANGA', 'Siège', '2025-01-01', 1.0);
 
 -- B. Insertion des 22 Subordonnés -- Nettoyage de la colonne 'anciennete' pour ne conserver que la valeur numérique. -- Attribution équilibrée entre Gabriel TASSO et Robin LEVREL.
-
 -- Subordonnés affectés à Gabriel TASSO (C004) 
 INSERT INTO employe (matricule, id_manager, id_fonction, nom, prenoms, classification, groupe, departement, service, region, lieu, date_embauche, anciennete) VALUES 
 ('2', NULL, (SELECT id FROM fonction WHERE label = 'Médiatrice'), 'RAHANITRARIVO', 'Haingotiana Isabelle', '4A', 'G3', 'Green', 'Economie vert', 'ANALAMANGA', 'Andramasina', '2020-02-07', 6.0),
@@ -77,55 +53,41 @@ UPDATE employe
 SET id_manager = (SELECT id FROM (SELECT id FROM employe WHERE matricule = 'C068') AS temp)
 WHERE matricule IN ('30', '56', '61', '108', '114', '143', '147', '194', '144', '145', '126');
 
---------------------------------------------------------------------------------
-
-
 -- 3. Génération des Entretiens Annuels
-
-
---------------------------------------------------------------------------------
-
-
 -- Création de 22 entretiens avec rotation de contenus textuels pour éviter la redondance.
-
-INSERT INTO entretien (id_employe, date_entretien, mission_ponctuelles, niveau, commentaire_bilan, commentaire_formation, commentaire_libre, date_signature_colab, date_signature_manager) 
+SET @rn := 0;
+INSERT INTO entretien (id_employe, date_entretien, mission_ponctuelles, niveau, commentaire_bilan, commentaire_formation, commentaire_libre, date_signature_colab, date_signature_manager)
 SELECT 
     id, 
-    '2024-12-10', 
+    DATE_ADD('2024-12-10', INTERVAL (@rn) DAY), -- Utilise la variable incrémentée
     CASE 
-        WHEN MOD(id, 4) = 0 THEN 'Support ponctuel sur l''inventaire de fin d''année.' 
-        WHEN MOD(id, 4) = 1 THEN 'Aide à la mise en place du nouveau protocole de sécurité.' 
-        WHEN MOD(id, 4) = 2 THEN 'Formation des saisonniers sur les techniques de repiquage.' 
-        ELSE 'Coordination logistique pour l''événement communautaire local.' END, 
-    (MOD(id, 4) + 1), 
+        WHEN MOD(@rn, 4) = 0 THEN 'Support ponctuel sur l''inventaire de fin d''année.' 
+        WHEN MOD(@rn, 4) = 1 THEN 'Aide à la mise en place du nouveau protocole de sécurité.' 
+        WHEN MOD(@rn, 4) = 2 THEN 'Formation des saisonniers sur les techniques de repiquage.' 
+        ELSE 'Coordination logistique pour l''événement communautaire local.' 
+    END,
+    (MOD(@rn, 4) + 1),
     CASE 
-        WHEN MOD(id, 4) = 0 THEN 'Très bon bilan, les objectifs sont atteints avec rigueur.' 
-        WHEN MOD(id, 4) = 1 THEN 'Bilan satisfaisant malgré quelques retards sur les rapports.' 
-        WHEN MOD(id, 4) = 2 THEN 'Excellente progression technique cette année.' 
-        ELSE 'Poste maîtrisé, le collaborateur est un pilier pour l''équipe.' END, 
+        WHEN MOD(@rn, 4) = 0 THEN 'Très bon bilan, les objectifs sont atteints avec rigueur.' 
+        WHEN MOD(@rn, 4) = 1 THEN 'Bilan satisfaisant malgré quelques retards sur les rapports.' 
+        WHEN MOD(@rn, 4) = 2 THEN 'Excellente progression technique cette année.' 
+        ELSE 'Poste maîtrisé, le collaborateur est un pilier pour l''équipe.' 
+    END,
     CASE 
-        WHEN MOD(id, 4) = 0 THEN 'Souhaite une formation Excel avancé.' 
-        WHEN MOD(id, 4) = 1 THEN 'Demande de renforcement en gestion de conflit.' 
-        WHEN MOD(id, 4) = 2 THEN 'Besoin de formation sur les nouveaux outils SIG.' 
-        ELSE 'Intérêt pour une certification en secourisme.' END, 
-    'Commentaire libre : Collaborateur volontaire et engagé.', 
-    '2024-12-11', 
-    '2024-12-12'
+        WHEN MOD(@rn, 4) = 0 THEN 'Souhaite une formation Excel avancé.' 
+        WHEN MOD(@rn, 4) = 1 THEN 'Demande de renforcement en gestion de conflit.' 
+        WHEN MOD(@rn, 4) = 2 THEN 'Besoin de formation sur les nouveaux outils SIG.' 
+        ELSE 'Intérêt pour une certification en secourisme.' 
+    END,
+    'Commentaire libre : Collaborateur volontaire et engagé.',
+    DATE_ADD('2024-12-10', INTERVAL (@rn := @rn + 1) DAY), -- Incrémentation de la variable ici
+    DATE_ADD('2024-12-10', INTERVAL (@rn + 1) DAY)
 FROM employe 
-WHERE matricule NOT IN ('C004', 'C068');
-
-
---------------------------------------------------------------------------------
-
+WHERE matricule NOT IN ('C004', 'C068')
+ORDER BY id;
 
 -- 4. Évaluation de la Performance (Notes et Commentaires)
-
-
---------------------------------------------------------------------------------
-
-
 -- 6 questions par entretien (132 lignes au total). -- Injection de 5 types de commentaires différents et 20% de valeurs NULL.
-
 INSERT INTO note_performance (id_entretien, num_question, note, commentaire) 
 SELECT 
     e.id, 
@@ -143,18 +105,8 @@ FROM
     entretien e 
     CROSS JOIN (SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) q;
 
-
---------------------------------------------------------------------------------
-
-
 -- 5. Réponses au Questionnaire QCM
-
-
---------------------------------------------------------------------------------
-
-
 -- 8 questions par entretien (176 lignes au total). Réponses distribuées entre 1 et 4.
-
 INSERT INTO reponse_qcm (id_entretien, num_question, reponse) 
 SELECT 
     e.id, 
@@ -164,17 +116,8 @@ FROM
     entretien e 
     CROSS JOIN (SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8) q;
 
---------------------------------------------------------------------------------
-
-
 -- 6. Axes de Progrès et Développement
-
-
---------------------------------------------------------------------------------
-
-
 -- 2 axes par entretien (44 lignes). Variété des labels et descriptions.
-
 INSERT INTO axe_progres (id_entretien, label, description) 
 SELECT 
     id, 
@@ -201,18 +144,8 @@ SELECT
     END 
 FROM entretien;
 
-
---------------------------------------------------------------------------------
-
-
 -- 7. Besoins en Formation
-
-
---------------------------------------------------------------------------------
-
-
 -- 2 demandes par entretien (44 lignes). Variété des titres, priorités et demandeurs.
-
 INSERT INTO formation (id_entretien, titre, priorite, demandeur) 
 SELECT 
     id, 
@@ -237,4 +170,5 @@ SELECT
     (MOD(id + 1, 3) + 1) 
 FROM entretien;
 
--- Fin du script de peuplement. -- Intégrité vérifiée : 22 employés subordonnés, 22 entretiens, 132 notes, 176 QCM, 44 axes, 44 formations. -- ================================================================================== -- FIN DU DOCUMENT -- ==================================================================================
+-- Fin du script de peuplement. -- Intégrité vérifiée : 22 employés subordonnés, 22 entretiens, 132 notes, 176 QCM, 44 axes, 44 formations. 
+-- ================================================================================== -- FIN DU DOCUMENT -- ==================================================================================
